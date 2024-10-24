@@ -10,7 +10,8 @@ def target_shooting(initial_aim, learning_rate, reward_function=lambda y: -(2-y)
     noise = np.random.normal(scale=noise_std, size=iteration)
     for i in range(iteration - 1):  # Adjust loop to avoid out-of-bounds error
         hit[i] = aim[i] + noise[i]
-        eligibility = (hit[i] - aim[i])
+        eligibility = hit[i] - aim[i]  # According to the task analytical part the eligibility parameter is equal
+        # to the difference between the hit and the aim divided by the noise variance.
         delta = learning_rate * reward_function(hit[i]) * 1/(noise_std**2) * eligibility
         aim[i + 1] = aim[i] + delta  # Update the next aim value
     hit[iteration - 1] = aim[iteration - 1] + noise[iteration - 1]  # Compute the last hit value
@@ -93,7 +94,7 @@ for idx, std in enumerate(noise_std):
     ax[idx].set_xlabel('Hit Location')
     ax[idx].set_ylabel('Reward')
     ax[idx].grid(True)
-    ax[idx].legend(['Median Aim Location'])
+    ax[idx].legend()
 plt.suptitle("Player's Reward vs. Hit Location with Different Noise Levels", fontsize=16)
 plt.show()
 

@@ -88,14 +88,13 @@ results = run_experiments(mean_1, mean_2, std_list, n)
 
 # plot the graphs
 plt.figure(figsize=(10, 6))
-plt.subplot(1, 2, 1)
 success_rates = [results[std]['success_rate'] for std in std_list]
 plt.plot(success_rates)
 plt.title("Successful Classification vs. Std")
 plt.xlabel("Standard Deviation")
 plt.ylabel("Success Rate")
+plt.show()
 
-plt.subplot(1, 2, 2)
 mean_steps = [results[std]['mean_steps'] for std in std_list]
 plt.plot(mean_steps)
 plt.title("Mean Number of Steps vs. Std")

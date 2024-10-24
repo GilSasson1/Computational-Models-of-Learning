@@ -45,18 +45,22 @@ def td_learning(p, steps, learning_rate=0.1):
         if position == (2, 2):
             position = start
 
-    print(world_state[1, 2] + -1)
-    return world_state
+    return world_state + reward_matrix
 
 
 # Example usage
 world_state = td_learning(p=0.8, steps=30000, learning_rate=0.01)
-plt.imshow(world_state, cmap='viridis')
+plt.imshow(world_state, cmap='viridis', interpolation='nearest', origin='upper')
 plt.colorbar()
+plt.title('World State after TD Learning')
+# Add the values to the plot
+for i in range(3):
+    for j in range(3):
+        plt.text(j, i, f'{world_state[i, j]:.2f}', ha='center', va='center', color='black')
 plt.show()
 
 
-def calculate_expected_value(world_state, reward_matrix, position, gamma=1.0):
+def calculate_expected_value(world_state, position):
     # Define possible movements
     directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
@@ -68,10 +72,8 @@ def calculate_expected_value(world_state, reward_matrix, position, gamma=1.0):
 
         # Check if the future position is within bounds
         if 0 <= future_position[0] < 3 and 0 <= future_position[1] < 3:
-            # Immediate reward + discounted future value
-            immediate_reward = reward_matrix[future_position]
             future_value = world_state[future_position]
-            expected_value += immediate_reward + gamma * future_value
+            expected_value += future_value
             num_valid_moves += 1
 
     if num_valid_moves > 0:
@@ -83,8 +85,7 @@ def calculate_expected_value(world_state, reward_matrix, position, gamma=1.0):
 reward_matrix = np.ones((3, 3)) * -1
 reward_matrix[2, 2] = 10
 
-# Example usage
+# Calculate the expected value at of X
 x_position = (1, 2)
-expected_value_x = calculate_expected_value(world_state, reward_matrix, x_position)
-print(f"Expected value at position {x_position}: {expected_value_x}")
-
+expected_value_x = calculate_expected_value(world_state, x_position)
+print(f"Expected value at position {(2, 3)}: {expected_value_x}")

@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import math
 
 # Load the alphabet alphabet
-file_path = '/Users/gilsasson/Library/CloudStorage/OneDrive-mail.tau.ac.il/פסיכולוגיה/שנה ג/סמסטר ב/מודלים חישוביים של למידה/alphabet.xlsx'
+file_path = ('/Users/gilsasson/Library/CloudStorage/OneDrive-mail.tau.ac.il/פסיכולוגיה/שנה ג/'
+             'סמסטר ב/מודלים חישוביים של למידה/Assignment 4/alphabet.xlsx') # Path to the alphabet file
 alphabet = pd.read_excel(file_path, header=None)
 alphabet = alphabet.values
 
